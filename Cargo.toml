@@ -16,3 +16,5 @@ yew-agent = { git = "https://github.com/yewstack/yew" }
 gloo = "0.8.0"
 log = "0.4"
 wasm-logger="0.2"
+getrandom = { version = "0.2", features = ["js"] }
+rand = "0.8"
