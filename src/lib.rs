@@ -5,7 +5,9 @@ pub mod cell;
 
 use cell::Cellule;
 use gloo::timers::callback::Interval;
+use log::info;
 use rand::Rng;
+use web_sys::window;
 use yew::html::Scope;
 use yew::prelude::*;
 
@@ -22,6 +24,7 @@ pub enum Msg {
 pub struct App {
     active: bool,
     cellules: Vec<Cellule>,
+    inner_width: usize,
     cellules_width: usize,
     cellules_height: usize,
     _interval: Interval,
@@ -110,13 +113,35 @@ impl Component for App {
 
     fn create(ctx: &Context<Self>) -> Self {
         let callback = ctx.link().callback(|_| Msg::Tick);
-        let interval = Interval::new(200, move || callback.emit(()));
+        let interval = Interval::new(2000, move || callback.emit(()));
 
-        let (cellules_width, cellules_height) = (53, 40);
+        let window = window().expect("There should be a window");
+        let inner_width = window
+            .inner_width()
+            .expect("a window should have an inner width")
+            .as_f64()
+            .expect("Should be a number");
+        let inner_height = window
+            .inner_height()
+            .expect("a window should have an inner height")
+            .as_f64()
+            .expect("Should be a number");
+
+        info!("{}x{}", inner_width, inner_height);
+
+        let (cellules_width, cellules_height) = (
+            ((inner_width - 2.0 * (inner_width / 25.0)) / 25.0).ceil() as usize + 1,
+            ((inner_height - 2.0 * (inner_height / 25.0)) / 25.0).ceil() as usize,
+        );
+
+        info!("{} {}", cellules_width, cellules_height);
+
+        ctx.link().send_message_batch(vec![Msg::Random, Msg::Start]);
 
         Self {
             active: false,
             cellules: vec![Cellule::new_dead(); cellules_width * cellules_height],
+            inner_width: inner_width as usize,
             cellules_width,
             cellules_height,
             _interval: interval,
@@ -178,7 +203,7 @@ impl Component for App {
                         .enumerate()
                         .map(|(x, cell)| self.view_cellule(idx_offset + x, cell, ctx.link()));
                     html! {
-                        <div key={y} class="game-row">
+                        <div key={y} class="game-row" style={format!("min-width: {}px; height: 25px", self.inner_width + 50)}>
                             { for cells }
                         </div>
                     }
@@ -187,10 +212,6 @@ impl Component for App {
         html! {
             <div>
                 <section class="game-container">
-                    <header class="app-header">
-                        <img alt="The app logo" src="favicon.ico" class="app-logo"/>
-                        <h1 class="app-title">{ "Game of Life" }</h1>
-                    </header>
                     <section class="game-area">
                         <div class="game-of-life">
                             { for cell_rows }
