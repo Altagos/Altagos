@@ -11,7 +11,7 @@ use web_sys::window;
 use yew::html::Scope;
 use yew::prelude::*;
 
-pub enum Msg {
+pub enum GOFMsg {
     Random,
     Start,
     Step,
@@ -21,7 +21,7 @@ pub enum Msg {
     Tick,
 }
 
-pub struct App {
+pub struct GameOfLife {
     active: bool,
     cellules: Vec<Cellule>,
     inner_width: usize,
@@ -30,7 +30,7 @@ pub struct App {
     _interval: Interval,
 }
 
-impl App {
+impl GameOfLife {
     pub fn random_mutate(&mut self) {
         for cellule in self.cellules.iter_mut() {
             if rand::thread_rng().gen() {
@@ -102,17 +102,17 @@ impl App {
         };
         html! {
             <div key={idx} class={classes!("game-cellule", cellule_status)}
-                onclick={link.callback(move |_| Msg::ToggleCellule(idx))}>
+                onclick={link.callback(move |_| GOFMsg::ToggleCellule(idx))}>
             </div>
         }
     }
 }
-impl Component for App {
-    type Message = Msg;
+impl Component for GameOfLife {
+    type Message = GOFMsg;
     type Properties = ();
 
     fn create(ctx: &Context<Self>) -> Self {
-        let callback = ctx.link().callback(|_| Msg::Tick);
+        let callback = ctx.link().callback(|_| GOFMsg::Tick);
         let interval = Interval::new(2000, move || callback.emit(()));
 
         let window = window().expect("There should be a window");
@@ -136,7 +136,8 @@ impl Component for App {
 
         info!("{} {}", cellules_width, cellules_height);
 
-        ctx.link().send_message_batch(vec![Msg::Random, Msg::Start]);
+        ctx.link()
+            .send_message_batch(vec![GOFMsg::Random, GOFMsg::Start]);
 
         Self {
             active: false,
@@ -150,36 +151,36 @@ impl Component for App {
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-            Msg::Random => {
+            GOFMsg::Random => {
                 self.random_mutate();
                 log::info!("Random");
                 true
             }
-            Msg::Start => {
+            GOFMsg::Start => {
                 self.active = true;
                 log::info!("Start");
                 false
             }
-            Msg::Step => {
+            GOFMsg::Step => {
                 self.step();
                 true
             }
-            Msg::Reset => {
+            GOFMsg::Reset => {
                 self.reset();
                 log::info!("Reset");
                 true
             }
-            Msg::Stop => {
+            GOFMsg::Stop => {
                 self.active = false;
                 log::info!("Stop");
                 false
             }
-            Msg::ToggleCellule(idx) => {
+            GOFMsg::ToggleCellule(idx) => {
                 let cellule = self.cellules.get_mut(idx).unwrap();
                 cellule.toggle();
                 true
             }
-            Msg::Tick => {
+            GOFMsg::Tick => {
                 if self.active {
                     self.step();
                     true
@@ -217,11 +218,11 @@ impl Component for App {
                             { for cell_rows }
                         </div>
                         <div class="game-buttons">
-                            <button class="game-button" onclick={ctx.link().callback(|_| Msg::Random)}>{ "Random" }</button>
-                            <button class="game-button" onclick={ctx.link().callback(|_| Msg::Step)}>{ "Step" }</button>
-                            <button class="game-button" onclick={ctx.link().callback(|_| Msg::Start)}>{ "Start" }</button>
-                            <button class="game-button" onclick={ctx.link().callback(|_| Msg::Stop)}>{ "Stop" }</button>
-                            <button class="game-button" onclick={ctx.link().callback(|_| Msg::Reset)}>{ "Reset" }</button>
+                            <button class="game-button" onclick={ctx.link().callback(|_| GOFMsg::Random)}>{ "Random" }</button>
+                            <button class="game-button" onclick={ctx.link().callback(|_| GOFMsg::Step)}>{ "Step" }</button>
+                            <button class="game-button" onclick={ctx.link().callback(|_| GOFMsg::Start)}>{ "Start" }</button>
+                            <button class="game-button" onclick={ctx.link().callback(|_| GOFMsg::Stop)}>{ "Stop" }</button>
+                            <button class="game-button" onclick={ctx.link().callback(|_| GOFMsg::Reset)}>{ "Reset" }</button>
                         </div>
                     </section>
                 </section>

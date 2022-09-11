@@ -1,3 +1,5 @@
+@import url("/assets/fonts/montserrat.css");
+
 html,
 body {
   margin: 0;
@@ -8,7 +10,7 @@ body {
 }
 
 body {
-  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 14px "Montserrat";
   line-height: 1.4em;
   color: #000;
   min-width: 230px;
@@ -19,6 +21,23 @@ body {
   font-smoothing: antialiased;
   font-weight: 300;
   background-color: #fff;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+header {
+    //display: inline-block;
+    font-weight: 700;
+    font-size: 4rem;
+    line-height: normal;
+    margin-bottom: 10px;
 }
 
 .app-logo {
