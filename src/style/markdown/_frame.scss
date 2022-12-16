@@ -1,0 +1,27 @@
+.markdown-frame {
+    display: flex;
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+
+    .markdown-input {
+        width: 50%;
+
+        textarea {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .markdown-output {
+        width: 50%;
+        height: 100%;
+        margin-left: 1rem;
+
+        overflow: scroll;
+
+        text-align: start;
+        font-weight: 400;
+    }
+}

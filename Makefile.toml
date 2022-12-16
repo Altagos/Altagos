@@ -1,0 +1,26 @@
+[tasks.format]
+install_crate = "rustfmt"
+command = "cargo"
+args = ["fmt", "--", "--emit=files"]
+
+[tasks.clean]
+command = "trunk"
+args = ["clean"]
+
+[tasks.build_release]
+install_crate = "trunk"
+command = "trunk"
+args = ["build", "--release"]
+dependencies = [
+    "format",
+]
+
+[tasks.build]
+install_crate = "trunk"
+command = "trunk"
+args = ["build"]
+
+[tasks.serve]
+install_crate = "trunk"
+command = "trunk"
+args = ["serve"]
