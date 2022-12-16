@@ -130,12 +130,12 @@ impl MarkdownFrame {
             MarkdownFrameMsg::Render(value)
         });
 
-        let content = &self.markdown;
+        let content = self.markdown.clone();
 
         html! {
             <textarea
-                class="new-todo"
-                placeholder="Input Markdown"
+                class="markdown"
+                value={content}
                 {oninput}
             >
             { content }
