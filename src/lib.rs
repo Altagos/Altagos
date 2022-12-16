@@ -28,6 +28,7 @@ fn switch(routes: Route) -> Html {
             <div class="header-container">
                 <header>{ "Work In Progress" }</header>
                 <small>{ "Probably forever..." }</small>
+                <Link<Route> to={Route::Markdown}>{ "Small markdown editor" }</Link<Route>>
             </div>
         },
         Route::Markdown => html! {
