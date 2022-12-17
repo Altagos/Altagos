@@ -83,11 +83,11 @@ impl Component for App {
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
-            <BrowserRouter>
+            <HashRouter>
                 <div class="page-container">
                     <Switch<Route> render={switch} /> // <- must be child of <BrowserRouter>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         }
     }
 }
