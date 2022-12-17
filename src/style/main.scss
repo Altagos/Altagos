@@ -1,5 +1,18 @@
 @use "markdown/frame";
 
+:root {
+    --background-color: var(--arc-palette-background,#fff);
+    --title-color: var(--arc-palette-title, #000);
+    --subtitle-color: var(--arc-palette-subtitle, #000);
+    --link-color: var(--arc-palette-maxContrastColor, #000);
+    --text-color: var(--arc-palette-maxContrastColor, #000);
+    --color-primary: var(--arc-palette-foregroundPrimary, #fff);
+    --color-subtle:var(--arc-palette-foregroundSecondary, #000);
+    --color-hover: var(--arc-palette-hover, rgba(0,0,0,0.1));
+
+    --font-size: 14px;
+}
+
 html,
 body {
     margin: 0;
@@ -10,17 +23,16 @@ body {
 }
 
 body {
-    font: 14px "Montserrat";
+    font: var(--font-size) "Montserrat";
     line-height: 1.4em;
-    color: #000;
+    background-color: var(--background-color);
+    color: var(--text-color);
     min-width: 230px;
     max-width: 100%;
     margin: 0 auto;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
     font-smoothing: antialiased;
-    font-weight: 300;
-    background-color: #fff;
 }
 
 .page-container {
@@ -39,9 +51,13 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
+
+    small {
+        color: var(--color-subtle)
+    }
 }
 
-header {
+.header {
     //display: inline-block;
     font-weight: 700;
     font-size: 4rem;
@@ -49,12 +65,19 @@ header {
     margin-bottom: 10px;
 }
 
+.title {
+    color: var(--title-color);
+}
+
+a {
+    color: var(--link-color);
+}
+
 blockquote {
-    border-left: 10px rgb(60, 60, 60) solid;
+    border-left: 10px var(--title-color) solid;
     margin-left: 20px;
     padding: 10px 10px 10px 20px;
-
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--color-hover);
 }
 
 li:has(input[type="checkbox"]) {

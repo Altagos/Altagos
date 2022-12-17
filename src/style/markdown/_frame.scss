@@ -11,6 +11,17 @@
         textarea {
             width: 100%;
             height: 100%;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            border: none;
+            border-right: var(--arc-palette-focus, var(--color-subtle)) solid 1px;
+            resize: none;
+            font-size: var(--font-size1255);
+            outline: none;
+
+            &:focus-visible {
+                outline: none;
+            }
         }
     }
 

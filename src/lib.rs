@@ -26,7 +26,7 @@ fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! {
             <div class="header-container">
-                <header>{ "Work In Progress" }</header>
+                <h1 class="header title">{ "Work In Progress" }</h1>
                 <small>{ "Probably forever..." }</small>
                 <Link<Route> to={Route::Markdown}>{ "Small markdown editor" }</Link<Route>>
             </div>
@@ -36,8 +36,9 @@ fn switch(routes: Route) -> Html {
         },
         Route::NotFound => html! {
             <div class="header-container">
-                <header>{ "404" }</header>
+                <h1 class="title header">{ "404" }</h1>
                 <h2>{ "Page not found!" }</h2>
+                <Link<Route> to={Route::Home}>{ "Back Home" }</Link<Route>>
             </div>
         },
     }
@@ -82,11 +83,11 @@ impl Component for App {
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
-            <div class="page-container">
-                <BrowserRouter>
+            <BrowserRouter>
+                <div class="page-container">
                     <Switch<Route> render={switch} /> // <- must be child of <BrowserRouter>
-                </BrowserRouter>
-            </div>
+                </div>
+            </BrowserRouter>
         }
     }
 }

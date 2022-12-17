@@ -69,7 +69,7 @@ impl Component for MarkdownFrame {
         let mut md_content = props.content.clone();
 
         if &md_content == "" {
-            md_content = LocalStorage::get(KEY).unwrap_or(md_content);
+            md_content = LocalStorage::get(KEY).unwrap_or("# Insert Markdown".to_string());
         }
 
         markdown.send(MarkdownInput::Content(md_content.clone()));
