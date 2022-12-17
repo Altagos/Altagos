@@ -1,7 +1,11 @@
 @use "markdown/frame";
+@use "scrollbar";
+
+@import "scrollbar";
 
 :root {
     --background-color: var(--arc-palette-background,#fff);
+    --background-extra-color: var(--arc-palette-backgroundExtra,#fff);
     --title-color: var(--arc-palette-title, #000);
     --subtitle-color: var(--arc-palette-subtitle, #000);
     --link-color: var(--arc-palette-maxContrastColor, #000);
@@ -9,6 +13,7 @@
     --color-primary: var(--arc-palette-foregroundPrimary, #fff);
     --color-subtle:var(--arc-palette-foregroundSecondary, #000);
     --color-hover: var(--arc-palette-hover, rgba(0,0,0,0.1));
+    --color-focus: var(--arc-palette-focus);
 
     --font-size: 14px;
 }
